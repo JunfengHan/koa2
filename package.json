@@ -19,6 +19,8 @@
   "homepage": "https://github.com/JunfengHan/koa2#readme",
   "dependencies": {
     "ejs": "^2.6.1",
-    "koa": "^2.4.1"
+    "koa": "^2.4.1",
+    "koa-views": "^6.1.4",
+    "pug": "^2.0.3"
   }
 }
