@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer')
 
 const base = 'https://movie.douban.com/subject/'
-const doubanId = '26325320'
+const doubanId = '1295644'
 
 const sleep = time => new Promise(resolve => {
     setTimeout(resolve, time);
@@ -66,7 +66,6 @@ const sleep = time => new Promise(resolve => {
         doubanId,
         cover: result.cover
     }
-    console.log('video数据', data)
     browser.close()
 
     process.send({data})
