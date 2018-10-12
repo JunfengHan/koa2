@@ -28,7 +28,9 @@ const sleep = time => new Promise(resolve => {
 
         if (it && it.length > 0) {
             var link = it.attr('href')
-            var cover = it.find('img').attr('style')
+            var cover = it.css('background-image')
+
+            var cover = cover.split('"')[1]
 
             return {
                 link,
@@ -64,7 +66,7 @@ const sleep = time => new Promise(resolve => {
         doubanId,
         cover: result.cover
     }
-
+    console.log('video数据', data)
     browser.close()
 
     process.send({data})
