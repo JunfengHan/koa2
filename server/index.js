@@ -3,15 +3,21 @@ const app = new Koa()
 const views = require('koa-views')
 const { resolve } = require('path')
 
-app.use(views(resolve(__dirname, './views'), {
-    extension: 'pug'
-}))
+const { connect } = require('./database/init')
 
-app.use(async (ctx, next) => {
-    await ctx.render('index', {
-        name: "Han",
-        me: "jun"
+;(async () => {
+    await connect()
+
+    app.use(views(resolve(__dirname, './views'), {
+        extension: 'pug'
+    }))
+    
+    app.use(async (ctx, next) => {
+        await ctx.render('index', {
+            name: "Han",
+            me: "jun"
+        })
     })
-})
-
-app.listen(3000)
+    
+    app.listen(3000)
+})()
