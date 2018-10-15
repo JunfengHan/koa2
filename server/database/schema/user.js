@@ -37,11 +37,11 @@ const userSchema = new Schema({
 })
 
 // ---> 增加虚拟字段，不会保存到数据库
-userSchema.virtual('isLocked').get(() => {
+userSchema.virtual('isLocked').get(function () {
     return !!(this.lockUntil && this.lockUntil > Date.now())
 })
 
-userSchema.pre('save', next => {
+userSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()
     } else {
@@ -52,7 +52,7 @@ userSchema.pre('save', next => {
 })
 
 // ---> 密码中间件给密码加盐生成新密码
-userSchema.pre('save', next => {
+userSchema.pre('save', function (next) {
     if (!this.isModified('password')) return next() 
 
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {

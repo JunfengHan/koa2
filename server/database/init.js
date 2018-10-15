@@ -37,15 +37,20 @@ exports.connect = () => {
         })
     
         mongoose.connection.once('open', () => {
-            const Dog = mongoose.model('Dog', { name: String })
-            const doga = new Dog({ name: '阿尔法' })
+            // const Dog = mongoose.model('Dog', { name: String })
+            // const doga = new Dog({ name: '阿尔法' })
 
-            doga.save().then(() => {
-              console.log('wang')
-            })
+            // doga.save().then(() => {
+            //   console.log('wang')
+            // })
 
             resolve()
             console.log('MongoDB 数据库连接成功！')
         })
     })
+}
+
+// ---> 初始化所有schema
+exports.initSchemas = () => {
+    glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(require)
 }
