@@ -1,4 +1,4 @@
-// 获取预览详情页面
+// ---> 获取预览详情页面
 const cp = require('child_process')
 const { resolve } = require('path')
 

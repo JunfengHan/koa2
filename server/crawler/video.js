@@ -1,3 +1,4 @@
+// ---> 爬取视频资源
 const puppeteer = require('puppeteer')
 
 const base = 'https://movie.douban.com/subject/'

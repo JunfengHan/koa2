@@ -1,4 +1,4 @@
-const mongoose = require('mogoose')
+const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
 const Mixed = Schema.Types.Mixed

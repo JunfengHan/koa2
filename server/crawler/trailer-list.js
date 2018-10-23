@@ -1,3 +1,4 @@
+// ---> 爬取电影相关信息
 const puppeteer = require('puppeteer')
 
 const url = 'https://movie.douban.com/tag/#/?sort=U&range=8,10&tags='

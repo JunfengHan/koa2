@@ -1,7 +1,14 @@
 const mongoose = require('mongoose')
+const glob = require('glob')
 const db = 'mongodb://localhost'
+const { resolve } = require('path')
 
 mongoose.Promise = global.Promise
+
+// ---> 初始化所有schema
+exports.initSchemas = () => {
+    glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(require)
+}
 
 exports.connect = () => {
     // ---> 计数连接错误次数
@@ -48,9 +55,4 @@ exports.connect = () => {
             console.log('MongoDB 数据库连接成功！')
         })
     })
-}
-
-// ---> 初始化所有schema
-exports.initSchemas = () => {
-    glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(require)
 }

@@ -8,7 +8,10 @@ const { connect, initSchemas } = require('./database/init')
 ;(async () => {
     await connect()
 
-    
+    initSchemas()
+
+    // require('./tasks/movie')
+    require('./tasks/doubanApi')
 })()
 
 app.use(views(resolve(__dirname, './views'), {
