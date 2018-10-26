@@ -2,8 +2,10 @@
 const rp = require('request-promise-native')
 const mongoose = require('mongoose')
 const Movie = mongoose.model('Movie')
+const Category = mongoose.model('Category')
 
 async function fetchMovie(item) {
+    console.log('item+++++++++++++', item)
     const url = `http://api.douban.com/v2/movie/${item.doubanId}`
     const res = await rp(url)
 
@@ -28,9 +30,11 @@ async function fetchMovie(item) {
         ]
     })
 
+    console.log('movies___________________', movies)
+
     // ---> 将爬取的粗数据通过api 获取更精细的数据
-    for (let i = 0; i < [movies(0)].length; i++) {
-        let movie = movie[i]
+    for (let i = 0; i < 2; i++) {
+        let movie = movies[i]
         let movieData = await fetchMovie(movie)
 
         if (movieData) {

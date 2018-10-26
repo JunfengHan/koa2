@@ -10,7 +10,9 @@ const { connect, initSchemas } = require('./database/init')
 
     initSchemas()
 
-    // require('./tasks/movie')
+    // ---> 爬取电影粗略数据,并保存到数据库
+    require('./tasks/movie')
+    // ---> 获取数据库中电影的简易数据，通过豆瓣 API 获取详细数据并分类保存
     require('./tasks/doubanApi')
 })()
 

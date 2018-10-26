@@ -70,7 +70,7 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods = {
-    comparePassword: (_password, password) => {
+    comparePassword: function (_password, password) {
         return new Promise((resolve, reject) => {
             bcrypt.compare(_password, password, (err, isMatch) => {
                 if (!err) resolve(isMatch)
@@ -79,7 +79,7 @@ userSchema.methods = {
         })
     },
 
-    incLoginAttempts: (user) => {
+    incLoginAttempts: function (user) {
         return new Promise((resolve, reject) => {
             if (this.lockUntil && this.lockUntil < Date.now()) {
                 this.update({
@@ -112,4 +112,4 @@ userSchema.methods = {
     }
 }
 
-mongoose.model('Movie', userSchema)
+mongoose.model('User', userSchema)

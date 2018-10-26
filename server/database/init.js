@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const glob = require('glob')
-const db = 'mongodb://localhost'
+const db = 'mongodb://localhost:27018'
 const { resolve } = require('path')
 
 mongoose.Promise = global.Promise
@@ -19,7 +19,7 @@ exports.connect = () => {
             mongoose.set('debug', true)
         }
     
-        mongoose.connect(db)
+        mongoose.connect(db, { useNewUrlParser: true })
     
         mongoose.connection.on('disconnected', () => {
             maxConnectTimes++
