@@ -5,7 +5,6 @@ const Movie = mongoose.model('Movie')
 const Category = mongoose.model('Category')
 
 async function fetchMovie(item) {
-    console.log('item+++++++++++++', item)
     const url = `http://api.douban.com/v2/movie/${item.doubanId}`
     const res = await rp(url)
 
@@ -25,28 +24,28 @@ async function fetchMovie(item) {
         $or: [
             { summary: { $exists: false} },
             { summary: null },
+            { year: { $exists: false}},
             { title: ''},
             { summary: ''}
         ]
     })
 
-    console.log('movies___________________', movies)
-
     // ---> 将爬取的粗数据通过api 获取更精细的数据
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < movies.length; i++) {
         let movie = movies[i]
         let movieData = await fetchMovie(movie)
 
         if (movieData) {
             let tags = movieData.tags || []
 
-            movie.tags = tags
+            movie.tags = movie.tags || []
             movie.summary = movieData.summary || ''
             movie.title = movieData.alt_title || movieData.title || ''
             movie.rawTitle = movieData.title || ''
 
             if (movieData.attrs) {
                 movie.movieTypes = movieData.attrs.movie_type || []
+                movie.year = movieData.attrs.year[0] || 0000
 
                 // ---> 判断电影分类
                 for (let i = 0; i < movie.movieTypes.length; i++) {

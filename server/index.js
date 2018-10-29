@@ -8,12 +8,14 @@ const { connect, initSchemas } = require('./database/init')
 ;(async () => {
     await connect()
 
-    initSchemas()
+    await initSchemas()
 
     // ---> 爬取电影粗略数据,并保存到数据库
-    require('./tasks/movie')
+    // require('./tasks/movie')
     // ---> 获取数据库中电影的简易数据，通过豆瓣 API 获取详细数据并分类保存
-    require('./tasks/doubanApi')
+    // require('./tasks/doubanApi')
+    // require('./tasks/trailer')
+    require('./tasks/qiniu')
 })()
 
 app.use(views(resolve(__dirname, './views'), {

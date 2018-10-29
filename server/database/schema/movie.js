@@ -27,7 +27,7 @@ const movieSchema = new Schema({
     pubDate: Mixed,
     year: Number,
 
-    tags: [String],
+    tags: Array,
 
     meta: {
         createdAt: {

@@ -8,14 +8,14 @@ const Movie = mongoose.model('Movie')
     const child = cp.fork(script, [])
     let invoked = false
 
-    child.on('error', err => {
+    child.on('error', function (err) {
         if (invoked) return
 
         invoked = true
         console.log(err)
     })
 
-    child.on('exit', code => {
+    child.on('exit', function (code) {
         if (invoked) return
 
         invoked = true
@@ -24,12 +24,12 @@ const Movie = mongoose.model('Movie')
         console.log(err)
     })
 
-    child.on('message', data => {
+    child.on('message', function (data) {
         let result = data.result
 
-        result.forEach(async item => {
+        result.forEach(async function(item) {
             let movie = await Movie.findOne({
-                doubanId: item.doubanId 
+                doubanId: item.doubanId
             })
 
             if (!movie) {
