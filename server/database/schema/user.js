@@ -18,7 +18,6 @@ const userSchema = new Schema({
         type: String
     },
     passWord: {
-        unique: true,
         required: true,
         type: String
     },
@@ -53,20 +52,18 @@ userSchema.pre('save', function (next) {
 
 // ---> 密码中间件给密码加盐生成新密码
 userSchema.pre('save', function (next) {
-    if (!this.isModified('password')) return next() 
+    if (!this.isModified('passWord')) return next()
 
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err) return next(err)
 
-        bcrypt.hash(user.passWord, salt, (error, hash) => {
+        bcrypt.hash(this.passWord, salt, (error, hash) => {
             if (error) return next()
 
-            this.password = hash
+            this.passWord = hash
             next()
         })
     })
-
-    next() 
 })
 
 userSchema.methods = {

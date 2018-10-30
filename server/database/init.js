@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const glob = require('glob')
-const db = 'mongodb://localhost:27017'
+const db = 'mongodb://localhost:27018'
 const { resolve } = require('path')
 
 mongoose.Promise = global.Promise
@@ -8,6 +8,22 @@ mongoose.Promise = global.Promise
 // ---> 初始化所有schema
 exports.initSchemas = () => {
     glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(require)
+}
+
+exports.initAdmin = async () => {
+    const User = mongoose.model('User')
+    let user = await User.findOne({
+        username: 'hanTest'
+    })
+    if (!user) {
+        const user = new User({
+            userName: 'hanTest01',
+            email: 'fda@fddfdq.com014',
+            passWord: 'fdaffdafdadfsf01'
+        })
+
+        await user.save()
+    }
 }
 
 exports.connect = () => {
@@ -44,13 +60,6 @@ exports.connect = () => {
         })
     
         mongoose.connection.once('open', () => {
-            // const Dog = mongoose.model('Dog', { name: String })
-            // const doga = new Dog({ name: '阿尔法' })
-
-            // doga.save().then(() => {
-            //   console.log('wang')
-            // })
-
             resolve()
             console.log('MongoDB 数据库连接成功！')
         })
