@@ -1,6 +1,8 @@
-const Router = require('koa-router')
 const mongoose = require('mongoose')
-const router = new Router()
+// ---> 引入装饰器
+const { controller, get, post, put } = require('../lib/decorator')
+
+@controller('/api/v0/movies')
 
 router.get('/movies/all', async (ctx, next) => {
     const Movie = mongoose.model('Movie')
