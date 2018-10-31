@@ -1,10 +1,23 @@
 const Koa = require('koa')
-const app = new Koa()
 const views = require('koa-views')
 const { resolve } = require('path')
 
 const { connect, initSchemas, initAdmin } = require('./database/init')
-const router = require('./routes')
+const R = require('ramda')
+const MIDDLEWARES = ['router']
+
+// ---> 使用函数式编程加载中间件数组
+const userMiddlewares = (app) => {
+    R.map(
+        R.compose(
+            R.forEachObjIndexed(
+                initWith => initWith(app)
+            ),
+            require,
+            name => resolve(__dirname, `./middlewares/${name}`)
+        )
+    )(MIDDLEWARES)
+}
 
 ;(async () => {
     await connect()
@@ -17,17 +30,10 @@ const router = require('./routes')
     // require('./tasks/doubanApi')
     // require('./tasks/trailer')
     // require('./tasks/qiniu')
+
+    const app = new Koa()
+    
+    await userMiddlewares(app)
+    
+    app.listen(3000)
 })()
-
-app.use(views(resolve(__dirname, './views'), {
-    extension: 'pug'
-}))
-
-app.use(async (ctx, next) => {
-    await ctx.render('index', {
-        name: "Han",
-        me: "jun"
-    })
-})
-
-app.listen(3000)

@@ -1,6 +1,6 @@
 const { resolve } = require('url')
 const Router = require('koa-router')
-const _ = require('loadsh')
+const _ = require('lodash')
 const glob = require('glob')
 
 const symbolPrefix = Symbol('prefix')
@@ -9,7 +9,7 @@ const routerMap = new Map()
 const isArray = c => _.isArray(c) ? c : [c]
 
 // 定义一个类
-export class Route {
+class Route {
     construcot (app, apiPath) {
         this.app = app
         this.apiPath = apiPath
@@ -33,6 +33,7 @@ export class Route {
         this.app.use(this.router.allowedMethods())
     }
 }
+exports.Route = Route
 
 const normalizePath = path => path.startsWith('/') ? path : `/${path}`
 // 修饰符 conf
@@ -47,34 +48,44 @@ const router = conf => (target, key, descriptor) => {
 }
 
 // 修饰符controller ---> 实现路径前缀
-export const controller = path => target => (target.prototype[symbolPrefix] = path)
+const controller = path => target => (target.prototype[symbolPrefix] = path)
 
-export const get = path => router({
+const get = path => router({
     method: 'get',
     path: path
 })
 
-export const post = path => router({
+const post = path => router({
     method: 'post',
     path: path
 })
 
-export const put = path => router({
+const put = path => router({
     method: 'put',
     path: path
 })
 
-export const del = path => router({
+const del = path => router({
     method: 'del',
     path: path
 })
 
-export const use = path => router({
+const use = path => router({
     method: 'use',
     path: path
 })
 
-export const all = path => router({
+const all = path => router({
     method: 'all',
     path: path
 })
+
+exports.controller = controller
+
+exports.get = get
+exports.post = post
+exports.put = put
+exports.del = del
+exports.use = use
+exports.all = all
+
