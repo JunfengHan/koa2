@@ -1,7 +1,6 @@
 // ---> 引入装饰器
 const { 
     controller,
-    get,
     post
 } = require('../lib/decorator')
 

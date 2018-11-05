@@ -6,7 +6,7 @@ const { connect, initSchemas, initAdmin } = require('./database/init')
 const R = require('ramda')
 const MIDDLEWARES = ['router']
 
-// ---> 使用函数式编程加载中间件数组
+// ---> 使用函数式编程加载路由中间件数组
 const userMiddlewares = (app) => {
     R.map(
         R.compose(
