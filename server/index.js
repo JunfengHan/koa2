@@ -6,8 +6,9 @@ const { connect, initSchemas, initAdmin } = require('./database/init')
 const R = require('ramda')
 const MIDDLEWARES = ['router']
 
-// ---> 使用函数式编程加载路由中间件数组
-const userMiddlewares = (app) => {
+
+// ---> 使用函数式编程加载中间件数组
+const useMiddlewares = (app) => {
     R.map(
         R.compose(
             R.forEachObjIndexed(
@@ -33,7 +34,7 @@ const userMiddlewares = (app) => {
 
     const app = new Koa()
     
-    await userMiddlewares(app)
+    await useMiddlewares(app)
     
     app.listen(3000)
 })()

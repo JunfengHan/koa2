@@ -34,7 +34,9 @@ exports.connect = () => {
         if (process.env.NODE_ENV !== 'production') {
             mongoose.set('debug', true)
         }
-    
+        // ---> 去除mongoose 相关错误提示
+        mongoose.set('useCreateIndex', true)
+        
         mongoose.connect(db, { useNewUrlParser: true })
     
         mongoose.connection.on('disconnected', () => {

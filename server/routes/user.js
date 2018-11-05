@@ -6,7 +6,7 @@ const {
 
 const { 
     checkPassword
-} = require('../service/admin')
+} = require('../service/user')
 
 @controller('/api/v0/user')
 class userController {

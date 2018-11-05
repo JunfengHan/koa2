@@ -1,5 +1,5 @@
-const { resolve } = require('url')
 const Router = require('koa-router')
+const { resolve } = require('path')
 const _ = require('lodash')
 const glob = require('glob')
 
@@ -10,7 +10,7 @@ const isArray = c => _.isArray(c) ? c : [c]
 
 // 定义一个类
 class Route {
-    construcot (app, apiPath) {
+    constructor (app, apiPath) {
         this.app = app
         this.apiPath = apiPath
         this.router = new Router()
@@ -35,6 +35,7 @@ class Route {
 }
 exports.Route = Route
 
+// 格式化路径
 const normalizePath = path => path.startsWith('/') ? path : `/${path}`
 // 修饰符 conf
 const router = conf => (target, key, descriptor) => {
